@@ -51,7 +51,7 @@ export default function Cart() {
                 <button
                   type="button"
                   onClick={() =>
-                    dispatch({ type: 'REMOVE_FROM_CAR', id: product.id })
+                    dispatch({ type: 'REMOVE_FROM_CART', id: product.id })
                   }
                 >
                   <MdDelete size={20} color="#7159c1" />

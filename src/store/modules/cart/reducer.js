@@ -15,8 +15,9 @@ export default function cart(state = [], action) {
         }
       });
     case 'REMOVE_FROM_CART':
+      console.log(action);
       return produce(state, draft => {
-        const productIndex = draft.findIndex(p => p.id === action.product.id);
+        const productIndex = draft.findIndex(p => p.id === action.id);
         if (productIndex >= 0) {
           draft.splice(productIndex, 1);
         }
