@@ -6,11 +6,22 @@ import {
   MdDelete,
 } from 'react-icons/md';
 
+import { removeFromCart, updateAmount } from '../../store/modules/cart/actions';
+
 import { Container, ProductTable, Total } from './styles';
 
 export default function Cart() {
   const products = useSelector(state => state.cart);
   const dispatch = useDispatch();
+
+  function increment(product) {
+    dispatch(updateAmount(product.id, product.amount + 1));
+  }
+
+  function decrement(product) {
+    dispatch(updateAmount(product.id, product.amount - 1));
+  }
+
   return (
     <Container>
       <ProductTable>
@@ -35,11 +46,11 @@ export default function Cart() {
               </td>
               <td>
                 <div>
-                  <button type="button">
+                  <button type="button" onClick={() => decrement(product)}>
                     <MdRemoveCircleOutline size={20} color="#7159c1" />
                   </button>
                   <input type="number" readOnly value={product.amount} />
-                  <button type="button">
+                  <button type="button" onClick={() => increment(product)}>
                     <MdAddCircleOutline size={20} color="#7159c1" />
                   </button>
                 </div>
@@ -50,9 +61,7 @@ export default function Cart() {
               <td>
                 <button
                   type="button"
-                  onClick={() =>
-                    dispatch({ type: 'REMOVE_FROM_CART', id: product.id })
-                  }
+                  onClick={() => dispatch(removeFromCart(product.id))}
                 >
                   <MdDelete size={20} color="#7159c1" />
                 </button>

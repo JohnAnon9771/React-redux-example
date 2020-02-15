@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { MdShoppingCart } from 'react-icons/md';
 import api from '../../services/api';
+
+import { addToCart } from '../../store/modules/cart/actions';
 
 import { formatPrice } from '../../utils/format';
 
@@ -32,10 +34,7 @@ export default function Home() {
           <strong>{product.title}</strong>
           <span>{product.price}</span>
 
-          <button
-            type="button"
-            onClick={() => dispatch({ type: 'ADD_TO_CART', product })}
-          >
+          <button type="button" onClick={() => dispatch(addToCart(product))}>
             <div>
               <MdShoppingCart size={16} color="#fff" /> 3
             </div>
