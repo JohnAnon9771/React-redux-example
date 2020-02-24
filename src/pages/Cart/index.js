@@ -6,12 +6,33 @@ import {
   MdDelete,
 } from 'react-icons/md';
 
+import { formatPrice } from '../../utils/format';
+
 import { removeFromCart, updateAmount } from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
 export default function Cart() {
-  const products = useSelector(state => state.cart);
+  const { cart, total } = useSelector(state => {
+    return {
+      cart: state.cart.map(product => ({
+        ...product,
+        subtotal: formatPrice(
+          parseFloat(product.price.replace('R$', '').replace(',', '.')) *
+            product.amount
+        ),
+      })),
+      total: formatPrice(
+        state.cart.reduce((total, item) => {
+          return (
+            total +
+            parseFloat(item.price.replace('R$', '').replace(',', '.')) *
+              item.amount
+          );
+        }, 0)
+      ),
+    };
+  });
   const dispatch = useDispatch();
 
   function increment(product) {
@@ -35,7 +56,7 @@ export default function Cart() {
           </tr>
         </thead>
         <tbody>
-          {products.map(product => (
+          {cart.map(product => (
             <tr key={product.id}>
               <td>
                 <img src={product.image} alt="" />
@@ -56,7 +77,7 @@ export default function Cart() {
                 </div>
               </td>
               <td>
-                <strong>R$258,80</strong>
+                <strong>{product.subtotal}</strong>
               </td>
               <td>
                 <button
@@ -74,7 +95,7 @@ export default function Cart() {
         <button type="button">Finalizar pedido</button>
         <Total>
           <span>TOTAL</span>
-          <strong>R$1920,00</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
