@@ -17,18 +17,11 @@ export default function Cart() {
     return {
       cart: state.cart.map(product => ({
         ...product,
-        subtotal: formatPrice(
-          parseFloat(product.price.replace('R$', '').replace(',', '.')) *
-            product.amount
-        ),
+        subtotal: formatPrice(product.price * product.amount),
       })),
       total: formatPrice(
         state.cart.reduce((total, item) => {
-          return (
-            total +
-            parseFloat(item.price.replace('R$', '').replace(',', '.')) *
-              item.amount
-          );
+          return total + item.price * item.amount;
         }, 0)
       ),
     };
@@ -63,7 +56,7 @@ export default function Cart() {
               </td>
               <td>
                 <strong>{product.title}</strong>
-                <span>{product.price}</span>
+                <span>{product.priceFormatted}</span>
               </td>
               <td>
                 <div>
