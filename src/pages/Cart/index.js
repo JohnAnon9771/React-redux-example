@@ -8,7 +8,10 @@ import {
 
 import { formatPrice } from '../../utils/format';
 
-import { removeFromCart, updateAmount } from '../../store/modules/cart/actions';
+import {
+  removeFromCart,
+  updateAmountRequest,
+} from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 
@@ -29,11 +32,11 @@ export default function Cart() {
   const dispatch = useDispatch();
 
   function increment(product) {
-    dispatch(updateAmount(product.id, product.amount + 1));
+    dispatch(updateAmountRequest(product.id, product.amount + 1));
   }
 
   function decrement(product) {
-    dispatch(updateAmount(product.id, product.amount - 1));
+    dispatch(updateAmountRequest(product.id, product.amount - 1));
   }
 
   return (
