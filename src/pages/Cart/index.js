@@ -23,8 +23,8 @@ export default function Cart() {
         subtotal: formatPrice(product.price * product.amount),
       })),
       total: formatPrice(
-        state.cart.reduce((total, item) => {
-          return total + item.price * item.amount;
+        state.cart.reduce((t, item) => {
+          return t + item.price * item.amount;
         }, 0)
       ),
     };
